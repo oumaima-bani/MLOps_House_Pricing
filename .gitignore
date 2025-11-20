@@ -5,3 +5,7 @@ data/*.csv
 models/*
 *.sqlite
 .env
+
+mlruns/
+*.onnx
+*.pkl
