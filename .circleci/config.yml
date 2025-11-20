@@ -1,0 +1,80 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@2.3.0
+
+jobs:
+  build_and_test:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+
+      - run:
+          name: Create virtual environment
+          command: |
+            python -m venv .venv
+
+      - run:
+          name: Install dependencies
+          command: |
+            . .venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+
+      - run:
+          name: Run ML pipeline (ingestion + feature eng + training)
+          command: |
+            . .venv/bin/activate
+            python src/data_ingestion.py
+            python src/feature_engineering.py
+            python src/train.py
+
+      - run:
+          name: Run unit tests
+          command: |
+            . .venv/bin/activate
+            pytest -q
+
+  build_docker_image:
+    machine: true
+    steps:
+      - checkout
+
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -t $DOCKERHUB_USERNAME/mlops-house-price:latest .
+
+      - run:
+          name: Log in to Docker Hub
+          command: |
+            echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
+
+      - run:
+          name: Push Docker image
+          command: |
+            docker push $DOCKERHUB_USERNAME/mlops-house-price:latest
+
+  deploy:
+    machine: true
+    steps:
+      - run:
+          name: Pull & run container on server
+          command: |
+            echo "Deployment would happen here (AWS EC2, DigitalOcean, etc.)"
+
+workflows:
+  version: 2
+  mlops_pipeline:
+    jobs:
+      - build_and_test
+      - build_docker_image:
+          requires:
+            - build_and_test
+      - deploy:
+          requires:
+            - build_docker_image
+          filters:
+            branches:
+              only: main
