@@ -4,14 +4,14 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile.api
+      dockerfile: Dockerfile
     container_name: house-api
     ports:
       - "8000:8000"
     volumes:
-      - ./api:/app         # <-- mount local code for hot-reloading
+      - ./api:/app/api     # mount your API folder
       - ./models:/app/models
-    command: uvicorn FastAPI:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn api.FastAPI:app --host 0.0.0.0 --port 8000 --reload
 
   streamlit:
     build:
@@ -21,9 +21,9 @@ services:
     ports:
       - "8501:8501"
     environment:
-      - API_URL=http://api:8000/predict
+      - API_URL=http://api:8000/predict   # container name = host
     depends_on:
       - api
     volumes:
-      - ./api:/app         # <-- mount local code for hot-reloading
-    command: streamlit run app_streamlit.py --server.port=8501 --server.address=0.0.0.0
+      - ./api:/app/api       # allow hot reload for UI code
+    command: streamlit run api/app_streamlit.py --server.port=8501 --server.address=0.0.0.0
