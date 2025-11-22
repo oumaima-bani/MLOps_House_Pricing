@@ -1,0 +1,18 @@
+# Python environment
+.venv/
+__pycache__/
+*.pyc
+
+# MLflow experiment logs
+mlruns/
+
+# Data files
+data/
+
+# Git
+.git/
+.gitignore
+
+# OS / IDE
+.DS_Store
+.vscode/
