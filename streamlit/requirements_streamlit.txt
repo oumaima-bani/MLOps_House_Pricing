@@ -1,0 +1,9 @@
+# UI
+streamlit
+
+# Light ML for loading processed data
+numpy>=1.24.0
+pandas>=2.0.3
+
+# Visualization
+matplotlib>=3.7.2
