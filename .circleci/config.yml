@@ -1,4 +1,4 @@
-version: 2.1
+version: 2.1 # specifies which CircleCI configuration version you’re using.
 
 orbs:
   python: circleci/python@2.3.0
@@ -6,9 +6,9 @@ orbs:
 jobs:
   build_and_test:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.9 #docker: image: cimg/python:3.9 → runs this job inside a container with Python 3.9.
     steps:
-      - checkout
+      - checkout # pulls your Git repository into the CircleCI job.
 
       - run:
           name: Create virtual environment
