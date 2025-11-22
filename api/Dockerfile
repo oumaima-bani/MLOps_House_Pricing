@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.9
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY requirements_api.txt ./requirements.txt
 RUN pip install --default-timeout=600 --no-cache-dir -r requirements.txt
 
 # Copy FastAPI code from api folder
-COPY api/FastAPI.py .
+COPY FastAPI.py .
 
 EXPOSE 8000
 
