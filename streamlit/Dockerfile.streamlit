@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copy the shared requirements file from root
 COPY ../requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --default-timeout=600 --no-cache-dir -r requirements.txt
 
 # Copy only Streamlit code
 COPY streamlit/app_streamlit.py .

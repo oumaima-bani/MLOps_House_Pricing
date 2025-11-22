@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copy root requirements.txt
 COPY requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --default-timeout=600 --no-cache-dir -r requirements.txt
 
 # Copy FastAPI code from api folder
 COPY api/FastAPI.py .
