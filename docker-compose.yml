@@ -11,7 +11,7 @@ services:
     # Optional: mount for hot reload if you want to edit code without rebuilding
     volumes:
       - ./api:/app
-    command: uvicorn FastAPI:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 
   streamlit:
     build:
@@ -21,7 +21,7 @@ services:
     ports:
       - "8501:8501"
     environment:
-      - API_URL=http://api:8000/predict
+      - API_URL=http://api:8000
     depends_on:
       - api
     # Optional: mount for hot reload
