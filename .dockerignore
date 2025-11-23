@@ -1,6 +1,8 @@
 # Python environment
 .venv/
 __pycache__/
+**/__pycache__/
+
 *.pyc
 
 # MLflow experiment logs

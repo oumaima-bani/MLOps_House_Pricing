@@ -7,7 +7,11 @@ COPY requirements_api.txt ./requirements.txt
 RUN pip install --default-timeout=600 --no-cache-dir -r requirements.txt
 
 # Copy FastAPI code from api folder
-COPY FastAPI.py .
+COPY app.py .
+
+# Copy the models folder
+COPY models ./models
+
 
 EXPOSE 8000
 
