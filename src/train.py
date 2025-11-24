@@ -8,7 +8,7 @@ from skl2onnx.common.data_types import FloatTensorType
 import os
 import joblib
 
-def train_and_save(processed_path="data/processed.csv", model_dir="models"):
+def train_and_save(processed_path="data/processed.csv", model_dir="api/models"):
     df = pd.read_csv(processed_path)
     X = df.drop(columns=["target"])
     y = df["target"]
