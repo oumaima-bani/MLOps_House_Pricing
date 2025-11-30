@@ -1,5 +1,5 @@
 # Stage 1: The Builder
-FROM python:3.11-slim as builder
+FROM python:3.10-slim as builder
 
 RUN pip install huggingface_hub
 ARG HF_TOKEN
@@ -8,7 +8,7 @@ RUN python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo
 
 
 # Stage 2: The Final Application
-FROM python:3.11-slim
+FROM python:3.10-slim
 
 WORKDIR /app
 
