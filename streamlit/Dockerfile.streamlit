@@ -1,12 +1,12 @@
-FROM python:3.9
+FROM python:3.9-slim
 
 WORKDIR /app
 
-# Copy the shared requirements file from root
-COPY requirements_streamlit.txt ./requirements.txt
-RUN pip install --default-timeout=600 --no-cache-dir -r requirements.txt
+# Copy requirements and install them normally
+COPY requirements_streamlit.txt .
+RUN pip install --no-cache-dir --default-timeout=600 -r requirements_streamlit.txt
 
-# Copy only Streamlit code
+# Copy Streamlit app
 COPY app_streamlit.py .
 
 EXPOSE 8501
